@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>STLCC 101 | Build-a-Blog</title>
+        <style type="text/css">
+            .error {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <center>
+            <h2>Build-a-Blog</h2>
+            <hr width="80%" />
+            <a href="newpost.html">&middot;&nbsp;Create a New Post&nbsp;&middot;</a>
+            &nbsp;&#124;&nbsp;
+            <a href="blog">&middot;&nbsp;Read Recent Posts&nbsp;&middot;</a>
+            <hr width="80%" />
+        </center>
+        <br />
+        {% block content %}
+        {% endblock %}
+        <br />
+    </body>
+</html>
