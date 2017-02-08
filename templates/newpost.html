@@ -1,1 +1,19 @@
-
+{% extends "base.html" %}
+{% block title %}
+<h2>Create a New Post</h2>
+{% endblock %}
+{% block content %}
+<form method="post">
+    <label>
+        <span class="caption">Post Title:</span><br />
+        <input type="text" name="title" style="width: 320px; height: 20px;" />
+    </label>
+    <br />
+    <label>
+        <span class="caption:">Post Content:</span><br />
+        <textarea rows="14" cols="50" name="post"></textarea>
+    <label>
+    <span class="error">{{ error|safe }}</span><br />
+    <input type="submit" value="Submit Post" />
+<form>
+{% endblock %}

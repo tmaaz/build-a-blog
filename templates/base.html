@@ -7,7 +7,7 @@
                 font-family: Arial, Helvetica, sans-serif;
                 color: #333;
                 background-color: #DEDEDE;
-                width: 845px;
+                width: 750px;
                 margin: 0 auto;
                 padding: 12px;
             }
@@ -45,21 +45,27 @@
                 font-size: 18px;
             }
             .error {
+                font-style: italic;
                 color: red;
+                font-size: 12px;
             }
         </style>
     </head>
     <body>
         <header id="wrap">
             <h1><em>Build-a-Blog</em></h1>
-            <hr width="80%" />
+            <hr width="90%" />
             <span class="menu">
-                &middot;&nbsp;<a href="newpost.html">CREATE A NEW POST</a>&nbsp;&middot;
+                &middot;&nbsp;<a href="/">HOME</a>&nbsp;&middot;
+                &nbsp;&#124;&nbsp;
+                &middot;&nbsp;<a href="newpost">CREATE A NEW POST</a>&nbsp;&middot;
                 &nbsp;&#124;&nbsp;
                 &middot;&nbsp;<a href="blog">READ RECENT POSTS</a>&nbsp;&middot;
             </span>
-            <hr width="80%" />
+            <hr width="90%" />
         </header>
+        {% block title %}
+        {% endblock %}
         <br />
         {% block content %}
         {% endblock %}

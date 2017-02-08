@@ -41,11 +41,23 @@ class MainHome(Handler):
     def get(self):
         self.render("base.html")
 
+# class to handle new post creation and error checking
+class NewPost(Handler):
+    def get(self):
+        self.render("newpost.html")
+
     def post(self):
-        error = "Error Message Goes Here".format()
-        self.redirect("/?error=" + error)
-        pass
+        title = self.request.get("title")
+        post = self.request.get("post")
+
+        if title and post:
+            pass
+        else:
+            error = "<strong>Error:</strong> We can't create a post without a post title <u>and</u> post content. Please try again."
+
+        self.render("newpost.html", error = error)
 
 app = webapp2.WSGIApplication([
-    ('/', MainHome)
+    ('/', MainHome),
+    ('/newpost', NewPost)
 ], debug=True)
