@@ -43,8 +43,11 @@ class MainHome(Handler):
 
 # class to handle new post creation and error checking
 class NewPost(Handler):
+    def render_newpost(self, title = "", post = "", error = ""):
+        self.render("newpost.html", title = title, post = post, error = error)
+
     def get(self):
-        self.render("newpost.html")
+        self.render_newpost()
 
     def post(self):
         title = self.request.get("title")
@@ -55,7 +58,7 @@ class NewPost(Handler):
         else:
             error = "<strong>Error:</strong> We can't create a post without a post title <u>and</u> post content. Please try again."
 
-        self.render("newpost.html", error = error)
+        self.render_newpost(title, post, error)
 
 app = webapp2.WSGIApplication([
     ('/', MainHome),
