@@ -4,4 +4,17 @@
 <h4>Most Recent Posts</h4>
 {% endblock %}
 {% block content %}
+
+{% for post in post_list %}
+<br />
+<hr width="50%" />
+<br />
+<span class="post">
+    <span class="post-title">{{post.title}}</span><br />
+    <span class="post-content">{{post.post}}</span><br />
+    <span class="post-timestamp">Posted on: {{post.creation}}</span>
+</span>
+<br />
+{% endfor %}
+
 {% endblock %}

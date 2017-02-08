@@ -19,12 +19,14 @@ import cgi
 import jinja2
 import os
 
+# import the database functionality
 from google.appengine.ext import db
 
 # jinja setup
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
+# nice Handler snippet to make displaying template pages significantly easier and cleaner
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
@@ -36,10 +38,11 @@ class Handler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
-# core class to handle page creation and display
+# class to handle the main page creation and display
 class MainHome(Handler):
     def get(self):
-        self.render("blog.html")
+        allPosts = db.GqlQuery("SELECT * FROM EachPost ORDER BY creation DESC LIMIT 5")
+        self.render("blog.html", post_list = allPosts)
 
 # class to handle new post creation and error checking
 class NewPost(Handler):
@@ -61,11 +64,13 @@ class NewPost(Handler):
             error = "<strong>Error:</strong> We can't create a post without a post title <u>and</u> post content. Please try again."
             self.render_newpost(title, post, error)
 
+# class to handle writing new posts into the database, and time stamping them
 class EachPost(db.Model):
     title = db.StringProperty(required = True)
     post = db.TextProperty(required = True)
     creation = db.DateTimeProperty(auto_now_add = True)
 
+# class to display each individual (full) post on it's own page, if the user chooses to do so
 class FullPost(Handler):
     pass
 
