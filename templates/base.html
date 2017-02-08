@@ -3,20 +3,63 @@
     <head>
         <title>STLCC 101 | Build-a-Blog</title>
         <style type="text/css">
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                color: #333;
+                background-color: #DEDEDE;
+                width: 845px;
+                margin: 0 auto;
+                padding: 12px;
+            }
+            #wrap{
+                margin: auto;
+                width: 80%;
+                padding: 10px;
+                text-align: center;
+            }
+            .menu a, .menu a:visited {
+                font-family: Tahoma, Geneva, sans-serif;
+                font-size: 14px;
+                line-height: 25px;
+                letter-spacing: .2em;
+                text-decoration: none;
+                color: #333 ;
+                -o-transition:.5s;
+                -ms-transition:.5s;
+                -moz-transition:.5s;
+                -webkit-transition:.5s;
+                transition:.5s;
+            }
+            .menu a:hover, .menu a:active {
+                text-decoration: none;
+                color: #FFFFFF;
+                text-shadow: 1px 1px 3px #000000;
+            }
+            hr {
+                border : 0;
+                height: 2px;
+                background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+            }
+            label {
+                display: block;
+                font-size: 18px;
+            }
             .error {
                 color: red;
             }
         </style>
     </head>
     <body>
-        <center>
-            <h2>Build-a-Blog</h2>
+        <header id="wrap">
+            <h1><em>Build-a-Blog</em></h1>
             <hr width="80%" />
-            <a href="newpost.html">&middot;&nbsp;Create a New Post&nbsp;&middot;</a>
-            &nbsp;&#124;&nbsp;
-            <a href="blog">&middot;&nbsp;Read Recent Posts&nbsp;&middot;</a>
+            <span class="menu">
+                &middot;&nbsp;<a href="newpost.html">CREATE A NEW POST</a>&nbsp;&middot;
+                &nbsp;&#124;&nbsp;
+                &middot;&nbsp;<a href="blog">READ RECENT POSTS</a>&nbsp;&middot;
+            </span>
             <hr width="80%" />
-        </center>
+        </header>
         <br />
         {% block content %}
         {% endblock %}

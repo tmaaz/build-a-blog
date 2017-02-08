@@ -19,18 +19,33 @@ import cgi
 import jinja2
 import os
 
+from google.appengine.ext import db
+
 # jinja setup
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
-jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir))
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
+class Handler(webapp2.RequestHandler):
+    def write(self, *a, **kw):
+        self.response.out.write(*a, **kw)
 
-class MainHandler(webapp2.RequestHandler):
+    def render_str(self, template, **params):
+        t = jinja_env.get_template(template)
+        return t.render(params)
+
+    def render(self, template, **kw):
+        self.write(self.render_str(template, **kw))
+
+# core class to handle page creation and display
+class MainHome(Handler):
     def get(self):
-        t = jinja_env.get_template("base.html")
-        error = cgi.escape(self.request.get("error"), quote=True)
-        content = t.render(error=error)
-        self.response.write(content)
+        self.render("base.html")
+
+    def post(self):
+        error = "Error Message Goes Here".format()
+        self.redirect("/?error=" + error)
+        pass
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHome)
 ], debug=True)
