@@ -39,7 +39,7 @@ class Handler(webapp2.RequestHandler):
 # core class to handle page creation and display
 class MainHome(Handler):
     def get(self):
-        self.render("base.html")
+        self.render("blog.html")
 
 # class to handle new post creation and error checking
 class NewPost(Handler):
@@ -54,13 +54,23 @@ class NewPost(Handler):
         post = self.request.get("post")
 
         if title and post:
-            pass
+            x = EachPost(title = title, post = post)
+            x.put()
+            self.redirect("/")
         else:
             error = "<strong>Error:</strong> We can't create a post without a post title <u>and</u> post content. Please try again."
+            self.render_newpost(title, post, error)
 
-        self.render_newpost(title, post, error)
+class EachPost(db.Model):
+    title = db.StringProperty(required = True)
+    post = db.TextProperty(required = True)
+    creation = db.DateTimeProperty(auto_now_add = True)
+
+class FullPost(Handler):
+    pass
 
 app = webapp2.WSGIApplication([
     ('/', MainHome),
-    ('/newpost', NewPost)
+    ('/newpost', NewPost),
+    ('/fullpost', FullPost)
 ], debug=True)
