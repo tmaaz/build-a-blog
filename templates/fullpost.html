@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 {% block title %}
 <h2>Welcome to Build-a-Blog!</h2>
-<h3>Most Recent Posts</h3>
+<h3>Full Post</h3>
 {% endblock %}
 {% block content %}
 <hr />
-{% for post in post_list %}
+{% for post in thisPost %}
 <article id="content">
     <section id="heading">
-        <a href="/blog/{{ post.key().id() }}"><h4>{{ post.title }}</h4></a>
+        <h4>{{post.title}}</h4></a>
         <h5>Posted on: {{ post.creation.strftime("%B %d, %Y, %I:%M %p") }}</h5>
     <section>
     <section id="body">
-        <p>{{ post.post }}</p>
+        <p>{{post.post}}</p>
     </section>
 </article>
 {% endfor %}

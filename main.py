@@ -18,6 +18,7 @@ import webapp2
 import cgi
 import jinja2
 import os
+import datetime
 
 # import the database functionality
 from google.appengine.ext import db
@@ -59,7 +60,8 @@ class NewPost(Handler):
         if title and post:
             x = EachPost(title = title, post = post)
             x.put()
-            self.redirect("/")
+            id = x.key().id()
+            self.redirect("/blog/{}".format(str(id)))
         else:
             error = "<strong>Error:</strong> We can't create a post without a post title <u>and</u> post content. Please try again."
             self.render_newpost(title, post, error)
@@ -71,11 +73,18 @@ class EachPost(db.Model):
     creation = db.DateTimeProperty(auto_now_add = True)
 
 # class to display each individual (full) post on it's own page, if the user chooses to do so
-class FullPost(Handler):
-    pass
+class ViewPostHandler(webapp2.RequestHandler):
+    def get(self, id):
+        pass
+        # Post.get_by_id(id)
+        # self.response.write(id)
+        # self.render("fullpost.html", jackKnife)
 
+
+# this makes the magic happen. Just kidding, it makes unicorns cry.
 app = webapp2.WSGIApplication([
     ('/', MainHome),
+    ('/blog', MainHome),
     ('/newpost', NewPost),
-    ('/fullpost', FullPost)
+    webapp2.Route('/blog/<id:\d+>', ViewPostHandler)
 ], debug=True)
