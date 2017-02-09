@@ -12,9 +12,25 @@
         <h5>Posted on: {{ post.creation.strftime("%B %d, %Y, %I:%M %p") }}</h5>
     <section>
     <section id="body">
-        <p>{{ post.post }}</p>
+        <p>
+            {{ post.post }}
+        </p>
+        <!-- commented out, until it can be made functional in the code
+        <span id="readme" style="display: {{ visiSpan }}">
+            <a href="/blog/{{ post.key().id() }}">Read More...</a>
+        </span>
+        -->
     </section>
 </article>
 {% endfor %}
 <hr />
 {% endblock %}
+
+def readMore(moreText):
+    if len(moreText) > 200:
+        trunkText = (moreText[:200] + '...')
+        visiSpan = "block"
+    else:
+        trunkText = moreText
+        visiSpan = "none"
+    return trunkText

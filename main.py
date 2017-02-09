@@ -27,6 +27,10 @@ from google.appengine.ext import db
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape = True)
 
+# function to engage pagination
+def get_posts(limit, offset):
+    pass
+
 # nice Handler snippet to make displaying template pages significantly easier and cleaner
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
@@ -43,6 +47,14 @@ class Handler(webapp2.RequestHandler):
 class MainHome(Handler):
     def get(self):
         allPosts = db.GqlQuery("SELECT * FROM EachPost ORDER BY creation DESC LIMIT 5")
+        # disabled for now, until we can figure out how to manipulate this one section
+        # for post in allPosts:
+        #     if len(post.post) > 150:
+        #         post.post[:150] + '...'
+        #         visiWhat = "block"
+        #     else:
+        #         visiWhat = "none"
+        # -- visiSpan = visiWhat also removed from render, so it doesn't break
         self.render("blog.html", post_list = allPosts)
 
 # class to handle new post creation and error checking
