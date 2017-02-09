@@ -73,12 +73,17 @@ class EachPost(db.Model):
     creation = db.DateTimeProperty(auto_now_add = True)
 
 # class to display each individual (full) post on it's own page, if the user chooses to do so
-class ViewPostHandler(webapp2.RequestHandler):
+class FullPost(webapp2.RequestHandler):
     def get(self, id):
-        pass
-        # Post.get_by_id(id)
-        # self.response.write(id)
-        # self.render("fullpost.html", jackKnife)
+        thisPost = EachPost.get_by_id(int(id))
+        x = jinja_env.get_template("fullpost.html")
+        if thisPost:
+            postContent = x.render(thisPost = thisPost)
+            self.response.write(postContent)
+        else:
+            error = "<strong>Error:</strong> Sorry, this post does not seem to exist. Please try again."
+            postContent = x.render(post = "", title = "", error = error)
+            self.response.write(postContent)
 
 
 # this makes the magic happen. Just kidding, it makes unicorns cry.
@@ -86,5 +91,5 @@ app = webapp2.WSGIApplication([
     ('/', MainHome),
     ('/blog', MainHome),
     ('/newpost', NewPost),
-    webapp2.Route('/blog/<id:\d+>', ViewPostHandler)
+    webapp2.Route('/blog/<id:\d+>', FullPost)
 ], debug=True)
