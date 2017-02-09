@@ -15,11 +15,10 @@
         <p>
             {{ post.post }}
         </p>
-        <!-- commented out, until it can be made functional in the code
-        <span id="readme" style="display: {{ visiSpan }}">
-            <a href="/blog/{{ post.key().id() }}">Read More...</a>
+        <!-- removed visiSpan 'none' style callout, until it can be made functional in the code -->
+        <span id="readme" style="display: block">
+            <a href="/blog/{{ post.key().id() }}">Read more...</a>
         </span>
-        -->
     </section>
 </article>
 {% endfor %}

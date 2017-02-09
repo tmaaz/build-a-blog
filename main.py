@@ -30,8 +30,16 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), a
 # function to engage pagination
 def get_posts(limit, offset):
     pass
+    # get the count of all available posts
+    # set the limit to 5 results per page
+    # figure out what page we're currently on (to set the offset)
+    # set the offset to show the pertinent posts
+    # pass the page #s (current and total) to the render engine
+    # pass the posts to the render engine
+    # render the page and footer pagination as necessary
 
-# nice Handler snippet to make displaying template pages significantly easier and cleaner
+
+# nice Handler to make displaying template pages easier and cleaner
 class Handler(webapp2.RequestHandler):
     def write(self, *a, **kw):
         self.response.out.write(*a, **kw)
@@ -43,11 +51,15 @@ class Handler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
-# class to handle the main page creation and display
+# class to handle the main/blog page creation and display
 class MainHome(Handler):
     def get(self):
-        allPosts = db.GqlQuery("SELECT * FROM EachPost ORDER BY creation DESC LIMIT 5")
-        # disabled for now, until we can figure out how to manipulate this one section
+        allPosts = db.GqlQuery("SELECT * FROM EachPost ORDER BY creation DESC")
+        postCount = allPosts.count()
+        # Snippets disabled for now, until we can figure out how to manipulate properly.
+        # it's working, per se, but we need to figure out how to manipulate just one
+        # entity inside the variable set and continue passing it along, intact, instead of
+        # deconstructing the whole thing, manipulating data, then reconstructing it.
         # for post in allPosts:
         #     if len(post.post) > 150:
         #         post.post[:150] + '...'

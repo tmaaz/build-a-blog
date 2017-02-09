@@ -133,8 +133,19 @@ a:hover, a:active
     {
         font-family: "Open Sans", Verdana, Arial, Helvetica, sans-serif;
         font-size: 13px !important;
+        font-weight: bold !important;
         line-height: 0px !important;
         margin-left: 30px;
+    }
+
+#newpost
+    {
+        margin: 15px 0px 0px 10px;
+    }
+
+#return
+    {
+        margin-left: 10px;
     }
 
 hr {
