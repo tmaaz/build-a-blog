@@ -19,6 +19,7 @@ import cgi
 import jinja2
 import os
 import datetime
+import time
 
 # import the database functionality
 from google.appengine.ext import db
@@ -54,6 +55,15 @@ class Handler(webapp2.RequestHandler):
 # class to handle the main/blog page creation and display
 class MainHome(Handler):
     def get(self):
+        # see if the user is requesting a specific page of the blog
+        # if webapp2.request.get('page') = null/0/none
+            # allPosts = db.GqlQuery("SELECT * FROM EachPost ORDER BY creation DESC")
+
+
+        # inject get_posts(limit, offset) --
+        # we need to assess what blog page the user is requesting --
+        # the 'limit' setting is always 5, since that's the requirement per page --
+        # if page = 1, then get_posts(5, 0), page=2 then get_posts(5, 5), etc --
         allPosts = db.GqlQuery("SELECT * FROM EachPost ORDER BY creation DESC")
         postCount = allPosts.count()
         # Snippets disabled for now, until we can figure out how to manipulate properly.
@@ -85,6 +95,7 @@ class NewPost(Handler):
             x = EachPost(title = title, post = post)
             x.put()
             id = x.key().id()
+            time.sleep(1)
             self.redirect("/blog/{}".format(str(id)))
         else:
             error = "<strong>Error:</strong> We can't create a post without a post title <u>and</u> post content. Please try again."
