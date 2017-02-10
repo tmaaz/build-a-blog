@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}
 <h2>Welcome to Build-a-Blog!</h2>
-<h3>Most Recent Posts</h3>
+<h3>Recent Posts ({{ allSubs }} total)</h3>
 {% endblock %}
 {% block content %}
 <hr />
@@ -25,11 +25,19 @@
 {% endfor %}
 <hr />
 <section id="pagination">
-<a href = "">&#8678;&nbsp;Previous</a>
+{% if curPg > 1 %}
+<a href = "blog?page={{ curPg - 1 }}">&#8678;&nbsp;Previous</a>
+{% else %}
+<span id="pageoff">&#8678;&nbsp;Previous</span>
+{% endif %}
 &nbsp;&#124;&nbsp;
-Page {{ curPg }} 1 of {{ allPg }}
+Page {{ curPg }} of {{ allPg }}
 &nbsp;&#124;&nbsp;
-<a href = "">Next&nbsp;&#8680;</a>
+{% if curPg < allPg %}
+<a href = "blog?page={{ curPg + 1 }}">Next&nbsp;&#8680;</a>
+{% else %}
+<span id="pageoff">Next&nbsp;&#8680;</span>
+{% endif %}
 </section>
 <br />
 {% endblock %}

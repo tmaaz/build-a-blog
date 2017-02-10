@@ -161,6 +161,13 @@ a:hover, a:active
         text-align: center;
     }
 
+#pageoff
+    {
+        font-family: Tahoma, Geneva, sans-serif;
+        text-decoration: none;
+        color: #AAA;
+    }
+
 hr
     {
         margin: auto;

@@ -21,8 +21,6 @@ import os
 import datetime
 import time
 import math
-
-# import the database functionality
 from google.appengine.ext import db
 
 # jinja setup
@@ -52,7 +50,7 @@ class Handler(webapp2.RequestHandler):
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
 
-# class to handle the main/blog page creation and display
+# class to handle the creation and display of the main and addtl blog page(s)
 class MainHome(Handler):
     def get(self):
         # see if the user is requesting a specific page of the blog
@@ -64,10 +62,12 @@ class MainHome(Handler):
         # the 'limit' setting is always 5, since that's the requirement per page --
         # if page = 1, then get_posts(5, 0), page=2 then get_posts(5, 5), etc --
         allPosts = db.GqlQuery("SELECT * FROM EachPost ORDER BY creation DESC")
-        pageCount = allPosts.count() // 5 + (allPosts.count() % 5 > 0)
+        allSubs = allPosts.count()
+        pageCount = allSubs // 5 + (allSubs % 5 > 0)
         if pageCount < 1:
             pageCount = 1
-        self.render("blog.html", post_list = allPosts, allPg = pageCount)
+        thisPage = 3
+        self.render("blog.html", post_list = allPosts, allSubs = allSubs, curPg = thisPage, allPg = pageCount)
 
 # class to handle new post creation and error checking
 class NewPost(Handler):
@@ -97,7 +97,7 @@ class EachPost(db.Model):
     post = db.TextProperty(required = True)
     creation = db.DateTimeProperty(auto_now_add = True)
 
-# class to display each individual (full) post on it's own page, if the user chooses to do so
+# class to display each individual (full) post on it's own page
 class FullPost(webapp2.RequestHandler):
     def get(self, id):
         thisPost = EachPost.get_by_id(int(id))
@@ -111,7 +111,7 @@ class FullPost(webapp2.RequestHandler):
             self.response.write(postContent)
 
 
-# this makes the magic happen. Just kidding, it makes unicorns cry.
+# this makes unicorns cry. Just kidding, it makes the magic happen.
 app = webapp2.WSGIApplication([
     ('/', MainHome),
     ('/blog', MainHome),
