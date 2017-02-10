@@ -53,20 +53,14 @@ class Handler(webapp2.RequestHandler):
 # class to handle the creation and display of the main and addtl blog page(s)
 class MainHome(Handler):
     def get(self):
-        # see if the user is requesting a specific page of the blog
-        # if webapp2.request.get('page') = null/0/none
-            # allPosts = db.GqlQuery("SELECT * FROM EachPost ORDER BY creation DESC")
-
-        # inject get_posts(limit, offset) --
-        # we need to assess what blog page the user is requesting --
-        # the 'limit' setting is always 5, since that's the requirement per page --
-        # if page = 1, then get_posts(5, 0), page=2 then get_posts(5, 5), etc --
-        allPosts = db.GqlQuery("SELECT * FROM EachPost ORDER BY creation DESC")
+        thisPage = int(self.request.get('page', default_value="1"))
+        page_offset = 5 * (thisPage - 1)
+        queryString = "SELECT * FROM EachPost ORDER BY creation DESC LIMIT 5 OFFSET " + str(page_offset)
+        allPosts = db.GqlQuery(queryString)
         allSubs = allPosts.count()
         pageCount = allSubs // 5 + (allSubs % 5 > 0)
         if pageCount < 1:
             pageCount = 1
-        thisPage = 3
         self.render("blog.html", post_list = allPosts, allSubs = allSubs, curPg = thisPage, allPg = pageCount)
 
 # class to handle new post creation and error checking
