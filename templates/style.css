@@ -74,7 +74,6 @@ p
 #heading
     {
         padding: 10px;
-        margin-top: 10px;
     }
 
 timestamp
@@ -123,18 +122,29 @@ a:hover, a:active
         letter-spacing: .2em;
     }
 
-    #heading a, #heading a:visited
-        {
-            font-size: 14px;
-            line-height: 25px;
-        }
+#heading a, #heading a:visited
+    {
+        font-size: 14px;
+        line-height: 25px;
+    }
+
+#content
+    {
+        background: #BBBBBB;
+        border-radius: 5px;
+        border: 1px solid #000000;
+        margin: 15px 43px;
+        padding: 1px 15px 24px 0px;
+        box-shadow: 2px 3px 2px 2px rgba(0, 0, 0, 0.25)
+    }
 
 #readme a
     {
         font-family: "Open Sans", Verdana, Arial, Helvetica, sans-serif;
-        font-size: 13px !important;
-        font-weight: bold !important;
-        line-height: 0px !important;
+        font-style: italic;
+        font-weight: bold;
+        font-size: 13px;
+        line-height: 0px;
         margin-left: 30px;
     }
 
@@ -143,12 +153,16 @@ a:hover, a:active
         margin: 15px 0px 0px 10px;
     }
 
-#return
+#pagination, #return
     {
-        margin-left: 10px;
+        margin: auto;
+        width: 80%;
+        padding: 10px;
+        text-align: center;
     }
 
-hr {
+hr
+    {
         margin: auto;
         width: 95%;
         border : 0;
@@ -156,13 +170,16 @@ hr {
         background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
     }
 
-label {
+label
+    {
         display: block;
         font-size: 18px;
     }
 
-.error {
+.error
+    {
         font-style: italic;
+        font-weight: bold;
         color: red;
         font-size: 12px;
     }

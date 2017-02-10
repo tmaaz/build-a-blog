@@ -20,6 +20,7 @@ import jinja2
 import os
 import datetime
 import time
+import math
 
 # import the database functionality
 from google.appengine.ext import db
@@ -38,7 +39,6 @@ def get_posts(limit, offset):
     # pass the page #s (current and total) to the render engine
     # pass the posts to the render engine
     # render the page and footer pagination as necessary
-
 
 # nice Handler to make displaying template pages easier and cleaner
 class Handler(webapp2.RequestHandler):
@@ -59,25 +59,15 @@ class MainHome(Handler):
         # if webapp2.request.get('page') = null/0/none
             # allPosts = db.GqlQuery("SELECT * FROM EachPost ORDER BY creation DESC")
 
-
         # inject get_posts(limit, offset) --
         # we need to assess what blog page the user is requesting --
         # the 'limit' setting is always 5, since that's the requirement per page --
         # if page = 1, then get_posts(5, 0), page=2 then get_posts(5, 5), etc --
         allPosts = db.GqlQuery("SELECT * FROM EachPost ORDER BY creation DESC")
-        postCount = allPosts.count()
-        # Snippets disabled for now, until we can figure out how to manipulate properly.
-        # it's working, per se, but we need to figure out how to manipulate just one
-        # entity inside the variable set and continue passing it along, intact, instead of
-        # deconstructing the whole thing, manipulating data, then reconstructing it.
-        # for post in allPosts:
-        #     if len(post.post) > 150:
-        #         post.post[:150] + '...'
-        #         visiWhat = "block"
-        #     else:
-        #         visiWhat = "none"
-        # -- visiSpan = visiWhat also removed from render, so it doesn't break
-        self.render("blog.html", post_list = allPosts)
+        pageCount = allPosts.count() // 5 + (allPosts.count() % 5 > 0)
+        if pageCount < 1:
+            pageCount = 1
+        self.render("blog.html", post_list = allPosts, allPg = pageCount)
 
 # class to handle new post creation and error checking
 class NewPost(Handler):

@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block title %}
-<h2>Create a New Post</h2>
+<h2>Post to Build-a-Blog!</h2>
+<h3>We welcome your comments</h3>
 {% endblock %}
 {% block content %}
+<hr />
 <form id="newpost" method="post">
     <label>
-        <span class="caption">Post Title:</span><br />
+        <span class="caption">Title:</span><br />
         <input type="text" name="title" value="{{title}}" style="width: 320px; height: 20px;" />
     </label>
     <br />
     <label>
-        <span class="caption:">Post Content:</span><br />
+        <span class="caption:">Post:</span><br />
         <textarea rows="14" cols="50" name="post">{{post}}</textarea>
     <label>
     <span class="error">{{ error|safe }}</span><br />

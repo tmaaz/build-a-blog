@@ -13,23 +13,23 @@
     <section>
     <section id="body">
         <p>
-            {{ post.post }}
+            {{ post.post|truncate(length=400, killwords=False, end='...') }}
         </p>
-        <!-- removed visiSpan 'none' style callout, until it can be made functional in the code -->
+        {% if post.post|length > 400 %}
         <span id="readme" style="display: block">
             <a href="/blog/{{ post.key().id() }}">Read more...</a>
         </span>
+        {% endif %}
     </section>
 </article>
 {% endfor %}
 <hr />
+<section id="pagination">
+<a href = "">&#8678;&nbsp;Previous</a>
+&nbsp;&#124;&nbsp;
+Page {{ curPg }} 1 of {{ allPg }}
+&nbsp;&#124;&nbsp;
+<a href = "">Next&nbsp;&#8680;</a>
+</section>
+<br />
 {% endblock %}
-
-def readMore(moreText):
-    if len(moreText) > 200:
-        trunkText = (moreText[:200] + '...')
-        visiSpan = "block"
-    else:
-        trunkText = moreText
-        visiSpan = "none"
-    return trunkText
