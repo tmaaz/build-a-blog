@@ -62,9 +62,9 @@ class MainHome(Handler):
         if pageCount < 1:
             pageCount = 1
         error = ""
-        if thisPage > allSubs:
-            thisPage = 1
-            pageCount = 1
+        if thisPage > pageCount:
+            thisPage = 0
+            pageCount = 0
             error = "We're sorry, this page does not exist. Please try again."
         self.render("blog.html", post_list = allPosts, allSubs = allSubs, curPg = thisPage, allPg = pageCount, error = error)
 
