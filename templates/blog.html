@@ -5,6 +5,9 @@
 {% endblock %}
 {% block content %}
 <hr />
+{% if error != "" %}
+<section id="bigerror">{{ error }}<br /></section>
+{% endif %}
 {% for post in post_list %}
 <article id="content">
     <section id="heading">

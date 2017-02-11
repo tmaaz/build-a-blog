@@ -168,6 +168,18 @@ a:hover, a:active
         color: #AAA;
     }
 
+#bigerror
+    {
+        margin: auto;
+        width: 80%;
+        padding: 50px;
+        text-align: center;
+        font-style: italic;
+        font-weight: bold;
+        color: red;
+        font-size: 24px;
+    }
+
 hr
     {
         margin: auto;

@@ -61,7 +61,12 @@ class MainHome(Handler):
         pageCount = allSubs // 5 + (allSubs % 5 > 0)
         if pageCount < 1:
             pageCount = 1
-        self.render("blog.html", post_list = allPosts, allSubs = allSubs, curPg = thisPage, allPg = pageCount)
+        error = ""
+        if thisPage > allSubs:
+            thisPage = 1
+            pageCount = 1
+            error = "We're sorry, this page does not exist. Please try again."
+        self.render("blog.html", post_list = allPosts, allSubs = allSubs, curPg = thisPage, allPg = pageCount, error = error)
 
 # class to handle new post creation and error checking
 class NewPost(Handler):
@@ -74,7 +79,6 @@ class NewPost(Handler):
     def post(self):
         title = self.request.get("title")
         post = self.request.get("post")
-
         if title and post:
             x = EachPost(title = title, post = post)
             x.put()
@@ -92,17 +96,14 @@ class EachPost(db.Model):
     creation = db.DateTimeProperty(auto_now_add = True)
 
 # class to display each individual (full) post on it's own page
-class FullPost(webapp2.RequestHandler):
+class FullPost(Handler):
     def get(self, id):
         thisPost = EachPost.get_by_id(int(id))
-        x = jinja_env.get_template("fullpost.html")
         if thisPost:
-            postContent = x.render(thisPost = thisPost)
-            self.response.write(postContent)
+            self.render("fullpost.html", thisPost = thisPost, error="")
         else:
-            error = "<strong>Error:</strong> Sorry, this post does not seem to exist. Please try again."
-            postContent = x.render(post = "", title = "", error = error)
-            self.response.write(postContent)
+            error = "We're sorry, this post does not exist. Please try again."
+            self.render("fullpost.html", thisPost = "", title = "", post = "", creation = "", error = error)
 
 
 # this makes unicorns cry. Just kidding, it makes the magic happen.

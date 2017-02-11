@@ -5,6 +5,9 @@
 {% endblock %}
 {% block content %}
 <hr />
+{% if error != "" %}
+<section id="bigerror">{{ error }}<br /></section>
+{% else %}
 <article id="content">
     <section id="heading">
         <h4>{{ thisPost.title }}</h4>
@@ -15,6 +18,7 @@
         <p>{{ thisPost.post }}</p>
     </section>
 </article>
+{% endif %}
 <hr />
 <section id="return">
     <a href="/blog">&#8678;&nbsp;Return to main Blog page</a>
